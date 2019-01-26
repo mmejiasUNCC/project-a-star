@@ -14,3 +14,50 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.toolbar-title-md {
+    font-size: 2rem;
+    font-weight: 500;
+    color: rgb(235, 232, 227);
+    padding: 0px 12px;
+}
+
+body, ion-content, .toolbar-background{
+    background-color: rgb(11, 20, 22)!important;
+    color: rgb(235, 232, 227) !important;
+}
+
+ion-navbar, .toolbar-background{
+    background-color: rgb(16, 28, 31)!important;
+    box-shadow: 0 2px 4px rgba(0,0,0,.5);
+}
+
+ion-content{
+    color: rgb(235, 232, 227) !important;
+}
+
+
+button{
+    background-color: rgb(15, 109, 172) !important;
+}
+
+
+/* Scrollbar width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Scrollbar Track */
+  ::-webkit-scrollbar-track {
+    background: #18161b; 
+  }
+   
+  /* Scrollbar Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #272a35; 
+  }
+  
+  /* Scrollbar Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(70, 69, 69); 
+  }
