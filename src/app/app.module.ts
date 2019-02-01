@@ -10,12 +10,14 @@ import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { AngularFireModule } from '@angular/fire';
 import firebaseConfig from './firebase';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import {ComponentsModule} from '../components/components.module';
 
 
 @NgModule({
@@ -28,6 +30,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
   ],
   imports: [
     BrowserModule,
+    ComponentsModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule
@@ -44,6 +47,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
     GooglePlus,
     StatusBar,
     SplashScreen,
+    BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
