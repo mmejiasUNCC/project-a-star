@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 
 /**
@@ -47,6 +47,7 @@ export class LoginPage {
               public navParams: NavParams, 
               public afAuth: AngularFireAuth, 
               private googlePlus: GooglePlus,
+              public alertController: AlertController,
               private platform: Platform) {
 
                 this.user = this.afAuth.authState;
@@ -55,6 +56,16 @@ export class LoginPage {
   
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      title: 'Test',
+      message: 'This part of code works',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   googleLogin() {
@@ -79,6 +90,7 @@ export class LoginPage {
 
 
     } catch(err){
+      this.presentAlert();
       console.log(err);
     }
   }
