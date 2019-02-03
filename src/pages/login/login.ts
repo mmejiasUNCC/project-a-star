@@ -5,7 +5,7 @@ import { HomePage } from '../home/home';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { GooglePlus } from '@ionic-native/google-plus';
 import { Platform, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 
@@ -41,6 +41,7 @@ export class User {
 export class LoginPage {
 
   currentUser: User;
+  res: any;
   user: Observable<firebase.User>;
 
   constructor(public navCtrl: NavController, 
@@ -58,10 +59,10 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  async presentAlert() {
+  async presentAlert(err) {
     const alert = await this.alertController.create({
       title: 'Test',
-      message: 'This part of code works',
+      message: err,
       buttons: ['OK']
     });
 
@@ -77,20 +78,33 @@ export class LoginPage {
   }
 
   async nativeGoogleLogin(): Promise<void> {
+    
     try {
-      const gplusUser = await this.googlePlus.login({
+      await this.googlePlus.login({
         'webClientId' : '266214346491-on7iuk9hh5k2ibg5crk06p1r1ecjmfe9.apps.googleusercontent.com',
         'offline' : true,
         'scopes' : 'profile email'
       }).then(res => {
+        this.res = res;
+        //this.presentAlert(JSON.stringify(this.res.givenName + "  " + this.res.familyName + "  " + this.res.imageUrl));
         return this.afAuth.auth.signInWithCredential(
-          firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)
+          firebase.auth.GoogleAuthProvider.credential(res.idToken)
         )
       })
 
+      this.currentUser.displayName = this.res.givenName + "  " + this.res.familyName;
+      this.currentUser.email = this.res.email;
+      this.currentUser.userId = this.res.userId;
+      this.currentUser.imageUrl = this.res.imageUrl;
+      this.currentUser.isLoggedIn = true;
+        
+      this.navCtrl.push(HomePage, {
+        currentUser: this.currentUser
+      });
+
 
     } catch(err){
-      this.presentAlert();
+      this.presentAlert(err);
       console.log(err);
     }
   }

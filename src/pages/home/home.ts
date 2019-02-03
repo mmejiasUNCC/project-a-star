@@ -10,19 +10,27 @@ import { Platform } from 'ionic-angular';
 export class HomePage {
   user: User;
   afHolder: any;
-  test: any;
+  qrOpen: boolean;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private platform: Platform) {
 
     this.user = navParams.get('currentUser');
-    this.test = "fuck it man";
+    this.qrOpen = false;
     
   }
 
   ionViewDidLoad() {
     
+  }
+
+  showScanner(){
+    this.qrOpen = true;
+  }
+
+  hideScanner(){
+    this.qrOpen = false;
   }
 
   signOut(){

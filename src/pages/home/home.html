@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content center text-center padding>
-    <ion-grid id="homeContent">
+    <ion-grid id="homeContent" *ngIf="qrOpen == 0">
         <ion-row>
               <ion-col>
                     <h1 text-uppercase no-padding no-margin >Profile</h1>
@@ -19,7 +19,11 @@
                 <button ion-button (click)="signOut()">Signout</button>
         </ion-row>
   </ion-grid>
-
-  <qr-code></qr-code>
+  <button ion-button *ngIf="qrOpen == 0" (click)="showScanner()">QR SCAN</button>
+  <div *ngIf="qrOpen">
+    <qr-code></qr-code>
+    <button ion-button (click)="hideScanner()">Exit</button>
+  </div>
+  
   
 </ion-content>
