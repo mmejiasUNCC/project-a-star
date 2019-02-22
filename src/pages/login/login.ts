@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events} from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -8,6 +8,7 @@ import * as firebase from 'firebase/app';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Platform, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
+
 
 /**
  * Generated class for the LoginPage page.
@@ -49,12 +50,18 @@ export class LoginPage {
               public afAuth: AngularFireAuth, 
               private googlePlus: GooglePlus,
               public alertController: AlertController,
+              public events: Events,
               private platform: Platform) {
 
                 this.user = this.afAuth.authState;
                 this.currentUser = new User();
+                events.subscribe('user:logout', () => {
+                  this.logout();
+                });
   }
   
+  
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
@@ -123,6 +130,9 @@ export class LoginPage {
         
         this.navCtrl.push(HomePage, {
           currentUser: this.currentUser
+        }).then(() => {
+          let index = 0;
+          this.navCtrl.remove(index);
         });
       });
     } catch(err){
@@ -130,6 +140,16 @@ export class LoginPage {
     }
   }
 
+
+  logout() {
+    console.log("Logging out...");
+    this.afAuth.auth.signOut()
+      .then(res => {
+        this.currentUser = new User();
+      })
+      .catch(err => console.error(err));
+  }
+  
 }
 
 
