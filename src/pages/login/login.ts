@@ -5,7 +5,7 @@ import { HomePage } from '../home/home';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { GooglePlus } from '@ionic-native/google-plus';
 import { Platform, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 

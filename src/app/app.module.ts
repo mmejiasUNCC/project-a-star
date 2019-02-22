@@ -16,7 +16,7 @@ import { AngularFireModule } from '@angular/fire';
 import firebaseConfig from './firebase';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { GooglePlus } from '@ionic-native/google-plus';
 import {ComponentsModule} from '../components/components.module';
 
 
