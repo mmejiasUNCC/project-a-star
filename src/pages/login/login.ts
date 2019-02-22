@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events} from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -8,6 +8,7 @@ import * as firebase from 'firebase/app';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Platform, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
+
 
 /**
  * Generated class for the LoginPage page.
@@ -41,6 +42,7 @@ export class User {
 export class LoginPage {
 
   currentUser: User;
+  res: any;
   user: Observable<firebase.User>;
 
   constructor(public navCtrl: NavController, 
@@ -48,17 +50,23 @@ export class LoginPage {
               public afAuth: AngularFireAuth, 
               private googlePlus: GooglePlus,
               public alertController: AlertController,
+              public events: Events,
               private platform: Platform) {
 
                 this.user = this.afAuth.authState;
                 this.currentUser = new User();
+                events.subscribe('user:logout', () => {
+                  this.logout();
+                });
   }
   
+  
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  async presentAlert() {
+  async presentAlert(err) {
     const alert = await this.alertController.create({
       title: 'Test',
       message: 'This part of code works',
@@ -77,20 +85,33 @@ export class LoginPage {
   }
 
   async nativeGoogleLogin(): Promise<void> {
+    
     try {
-      const gplusUser = await this.googlePlus.login({
+      await this.googlePlus.login({
         'webClientId' : '266214346491-on7iuk9hh5k2ibg5crk06p1r1ecjmfe9.apps.googleusercontent.com',
         'offline' : true,
         'scopes' : 'profile email'
       }).then(res => {
+        this.res = res;
+        //this.presentAlert(JSON.stringify(this.res.givenName + "  " + this.res.familyName + "  " + this.res.imageUrl));
         return this.afAuth.auth.signInWithCredential(
-          firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken)
+          firebase.auth.GoogleAuthProvider.credential(res.idToken)
         )
       })
 
+      this.currentUser.displayName = this.res.givenName + "  " + this.res.familyName;
+      this.currentUser.email = this.res.email;
+      this.currentUser.userId = this.res.userId;
+      this.currentUser.imageUrl = this.res.imageUrl;
+      this.currentUser.isLoggedIn = true;
+        
+      this.navCtrl.push(HomePage, {
+        currentUser: this.currentUser
+      });
+
 
     } catch(err){
-      this.presentAlert();
+      this.presentAlert(err);
       console.log(err);
     }
   }
@@ -109,6 +130,9 @@ export class LoginPage {
         
         this.navCtrl.push(HomePage, {
           currentUser: this.currentUser
+        }).then(() => {
+          let index = 0;
+          this.navCtrl.remove(index);
         });
       });
     } catch(err){
@@ -116,6 +140,16 @@ export class LoginPage {
     }
   }
 
+
+  logout() {
+    console.log("Logging out...");
+    this.afAuth.auth.signOut()
+      .then(res => {
+        this.currentUser = new User();
+      })
+      .catch(err => console.error(err));
+  }
+  
 }
 
 
