@@ -7,6 +7,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { CreateEventPage } from '../pages/create-event/create-event';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -18,6 +19,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { GooglePlus } from '@ionic-native/google-plus';
 import {ComponentsModule} from '../components/components.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,11 +28,13 @@ import {ComponentsModule} from '../components/components.module';
     AboutPage,
     ContactPage,
     HomePage,
-    LoginPage
+    LoginPage,
+    CreateEventPage
   ],
   imports: [
     BrowserModule,
     ComponentsModule,
+    FormsModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule
@@ -41,7 +45,8 @@ import {ComponentsModule} from '../components/components.module';
     AboutPage,
     ContactPage,
     HomePage,
-    LoginPage
+    LoginPage,
+    CreateEventPage
   ],
   providers: [
     GooglePlus,

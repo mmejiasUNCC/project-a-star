@@ -1,0 +1,31 @@
+page-create-event {
+    
+    #form-area{
+        height: 90%;
+        margin: 0px;
+        max-height: 88%;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    #submit-area{
+        margin: 0px;
+        height: 5%;
+        button{
+            margin:30px auto;
+            display:block;
+            min-width: 150px;
+            border-radius: 50px;
+        }
+    }
+    ion-title{
+        margin-top:10px;
+    }
+    ion-navbar *{
+        display: inline-block;
+    }
+    ion-navbar button{
+        float: right;
+    }
+}
+

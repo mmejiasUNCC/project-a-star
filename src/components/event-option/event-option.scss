@@ -1,0 +1,90 @@
+event-option {
+
+  .card-header *{
+    color: white;
+  }
+
+  .option-types{
+    float: right;
+    margin-top: 10px;
+    
+    button{
+      margin-top: 0px;
+      vertical-align: top;
+      *{
+        height: 5px;
+      }
+    }
+    select{
+      height: 36px;
+      padding: 0px 7px;
+    }
+  }
+  .card-header h1{
+    padding-top: 15px;
+    margin-left: 10px;
+    display: inline-block;
+  }
+    button{
+        background-color: rgba(15, 109, 172, 0) !important;
+        
+      }
+    .text-input{
+        padding: 15px 5px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #11446e;
+      }
+      
+      .text-input:focus{
+        border-bottom: 1px solid #2196f3;
+      }
+
+      select{
+          background-color:  #11446e;
+          border: none;
+          padding: 5px;
+          margin-left: 10px;
+          margin-right: 10px;
+      }
+
+      
+      .checkbox-options, .linear-scale-options{
+          margin-bottom: 15px;
+        .square{
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 32px;
+            margin-left: 14px;
+            margin-right: 3px;
+              width: 15px;
+              height: 15px;
+              background-color: aqua;
+          }
+        .text-input, .input{
+            vertical-align: top;
+            margin: 0px;
+            display: inline-block;
+            padding: 15px 5px;
+            width: 300px;
+          }
+      }
+
+      .linear-scale-options{
+          margin-top: 25px;
+        p{
+            display: inline-block;
+            height: 35px;
+            vertical-align: top;
+            text-align: center;
+            margin-top: 16px;
+        }
+      }
+
+      .linear-range{
+          margin-top: 15px;
+      }
+
+      #add-option{
+          margin: 15px; 
+      }
+}
