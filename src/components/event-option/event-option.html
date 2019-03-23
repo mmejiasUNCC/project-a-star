@@ -18,56 +18,63 @@
           <button ion-button (click)="exitOption()">X</button>
       </div>
     </ion-card-header>
-  
+    
+    
     <ion-card-content *ngIf="nodeType == 'shortanswer'" class="short-answer">
-      <ion-input [(ngModel)]="question" placeholder="Enter Question"></ion-input>
-      <p>Short answer text</p>
+      <form #shortanswerForm="ngForm">
+        <ion-input required [(ngModel)]="question" placeholder="Enter Question" name="saQuestion" [ngClass]="(invalid == true) ? 'invalid' : ''"></ion-input>
+        <p>Short answer text</p>
+      </form>
+      
     </ion-card-content>
 
+    
     <ion-card-content *ngIf="nodeType == 'checkbox'" class="checkbox">
-      <ion-input [(ngModel)]="question" placeholder="Enter Question"></ion-input>
-      <div class="checkbox-options" *ngFor="let x of optionData; let i = index">
-        <div class="square"></div>
-        <ion-input  [(ngModel)]="optionData[i].value" placeholder="Option {{i + 1}}"></ion-input>
-      </div>
-
-      <button ion-button id="add-option" (click)="addCheckboxOption()">Add option</button>
+      <form #checkboxForm="ngForm">
+        <ion-input required [(ngModel)]="question" placeholder="Enter Question" name="cbQuestion" [ngClass]="(invalid == true) ? 'invalid' : ''"></ion-input>
+        <div class="checkbox-options" *ngFor="let x of optionData; let i = index">
+          <div class="square"></div>
+          <ion-input required [(ngModel)]="optionData[i].value" placeholder="Option {{i + 1}}" name="Option {{i + 1}}" [ngClass]="(invalid == true) ? 'invalid' : ''"></ion-input>
+        </div>
+        <button ion-button id="add-option" (click)="addCheckboxOption()">Add option</button>
+      </form>
     </ion-card-content>
 
+   
     <ion-card-content *ngIf="nodeType == 'linearscale'" class="linear-scale">
-      <ion-input [(ngModel)]="question" placeholder="Enter Question"></ion-input>
-     <div class="linear-range">
-      <select (change)="lowSelect($event.target.value)">
-        <option value="0" selected>0</option>
-        <option value="1">1</option>
-      </select>
+      <form #linearscaleForm="ngForm">
+          <ion-input required [(ngModel)]="question" placeholder="Enter Question" name="lsQuestion" [ngClass]="(invalid == true) ? 'invalid' : ''"></ion-input>
+        <div class="linear-range">
+          <select (change)="lowSelect($event.target.value)">
+            <option value="0" selected>0</option>
+            <option value="1">1</option>
+          </select>
 
-      <span>to</span>
+          <span>to</span>
 
-      <select (change)="highSelect($event.target.value)">
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5" selected>5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-      </select>
-     </div>
+          <select (change)="highSelect($event.target.value)">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+        </div>
 
-      <div class="linear-scale-options">
-        <p>Low</p>
-        <ion-input [(ngModel)]="lowTag" placeholder="Option"></ion-input>
-      </div>
+          <div class="linear-scale-options">
+            <p>Low</p>
+            <ion-input [(ngModel)]="lowTag" placeholder="Option" name="lowT"></ion-input>
+          </div>
 
-      <div class="linear-scale-options">
-        <p>High</p>
-        <ion-input [(ngModel)]="highTag" placeholder="Option"></ion-input>
-      </div>
-
+          <div class="linear-scale-options">
+            <p>High</p>
+            <ion-input [(ngModel)]="highTag" placeholder="Option" name="highT"></ion-input>
+          </div>
+      </form>
     </ion-card-content>
-
   </ion-card>
 </div>

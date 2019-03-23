@@ -27,5 +27,33 @@ page-create-event {
     ion-navbar button{
         float: right;
     }
+
+    .card-header *{
+        color: white;
+    }
+
+    .text-input{
+        padding: 15px 5px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #11446e;
+      }
+      
+      .text-input:focus{
+        border-bottom: 1px solid #2196f3;
+      }
+    
+      #eventInfo{
+          h1{
+            text-align: center;
+            margin-top: 25px;
+            
+          }
+        
+        
+        .card-header-md{
+            padding: 0px;
+            margin: 0px;
+        }
+      }
 }
 

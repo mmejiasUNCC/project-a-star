@@ -1,6 +1,9 @@
 qr-code {
     ion-content{
-        height: 160px;
+        height: 180px;
+    }
+    .scroll-content{
+        overflow-x: hidden; 
+        overflow-y: hidden;
     }
 }
-

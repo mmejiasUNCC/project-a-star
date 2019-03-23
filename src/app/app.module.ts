@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { EventDetailsPage } from '../pages/event-details/event-details';
 import { LoginPage } from '../pages/login/login';
 import { CreateEventPage } from '../pages/create-event/create-event';
 
@@ -16,10 +17,13 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { AngularFireModule } from '@angular/fire';
 import firebaseConfig from './firebase';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { GooglePlus } from '@ionic-native/google-plus';
 import {ComponentsModule} from '../components/components.module';
 import { FormsModule } from '@angular/forms';
+
+import {IonicStorageModule} from '@ionic/storage';
 
 
 @NgModule({
@@ -28,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     AboutPage,
     ContactPage,
     HomePage,
+    EventDetailsPage,
     LoginPage,
     CreateEventPage
   ],
@@ -36,8 +41,10 @@ import { FormsModule } from '@angular/forms';
     ComponentsModule,
     FormsModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,6 +52,7 @@ import { FormsModule } from '@angular/forms';
     AboutPage,
     ContactPage,
     HomePage,
+    EventDetailsPage,
     LoginPage,
     CreateEventPage
   ],

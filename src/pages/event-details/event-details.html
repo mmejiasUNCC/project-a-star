@@ -1,0 +1,31 @@
+<!--
+  Generated template for the EventDetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>event-details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <p>
+      {{ (event | async)?.title }}
+  </p>
+  
+  <p>
+      {{ (event | async)?.eventID }}
+  </p>
+
+  <p *ngFor="let event of eventData; let i = index">
+    {{ (event | async)?.optionType }}
+  </p>
+ 
+  <qr-code [eventID] ="eventID"></qr-code>
+
+</ion-content>

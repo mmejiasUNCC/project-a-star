@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content center text-center padding>
-    <ion-grid id="homeContent">
+   <!-- <ion-grid id="homeContent"> 
         <ion-row>
-              <ion-col>
+              <ion-col *ngIf="loaded">
                     <h1 text-uppercase no-padding no-margin >Profile</h1>
                     <h3  no-padding no-margin >{{this.user.displayName}}</h3>
                     <img id="profilePic" [src]="this.user.imageUrl">
@@ -21,7 +21,18 @@
   </ion-grid>
 
   <button ion-button (click)="goToCreateEvent()">Create Event</button>
+  <p *ngFor="let x of eventData; let i = index">{{x[i].eventID}}</p>
 
   <qr-code></qr-code>
-  
+-->
+<button ion-button (click)="goToCreateEvent()">Create Event</button>
+
+<ion-list>
+  <ion-item *ngFor="let event of eventData; let i = index" (click)="goToEvent(i)">
+    <ion-label>{{ (event[1] | async)?.title }}</ion-label>
+  </ion-item>
+</ion-list>
+
+<button ion-button (click)="signOut()">Signout</button>
+
 </ion-content>

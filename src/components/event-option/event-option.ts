@@ -1,5 +1,6 @@
-import { Component, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { NgForm } from '@angular/forms';
 
 
 /**
@@ -15,27 +16,33 @@ import { NavController, NavParams } from 'ionic-angular';
 export class EventOptionComponent {
   @Input() index: number;
   @Output() onExit: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('shortanswerForm') shortanswerForm: NgForm;
+  @ViewChild('checkboxForm') checkboxForm: NgForm;
+  @ViewChild('linearscaleForm') linearscaleForm: NgForm;
+
   d: number = 0;
   optionData: Array<any>;
   hide: boolean = false;
   nodeType: string = "shortanswer";
   optionObject: any;
+  invalid: boolean;
 
   question: string;
   low: number = 0;
   high: number = 5;
-  lowTag: string;
-  highTag: string;
+  lowTag: string = "Low";
+  highTag: string = "High";
 
 
   constructor(public navCtrl: NavController,
               private cdRef: ChangeDetectorRef, 
               public navParams: NavParams) {
       this.optionData = [{value: ""}];
+      this.invalid = false;
       this.optionObject = {
         optionID: "test",
         optionType: "test",
-        data: {}
+        data: []
       }
   }
 
@@ -67,6 +74,23 @@ export class EventOptionComponent {
     }
     this.cdRef.detectChanges();
   }
+
+  inputValidation(){
+
+    if(this.nodeType == 'shortanswer' && this.shortanswerForm.valid == false){
+      this.invalid = true;
+    }else if(this.nodeType == 'checkbox' && this.checkboxForm.valid == false){      
+      this.invalid = true;
+    }else if(this.nodeType == 'linearscale' && this.linearscaleForm.valid == false){
+      this.invalid = true;
+    }else{
+      this.invalid = false;
+    }
+   
+    this.cdRef.detectChanges();
+    return this.invalid;
+  }
+
   sendObjectToParent() {
     if(this.nodeType == 'shortanswer'){
       this.optionObject.optionType = 'shortanswer';

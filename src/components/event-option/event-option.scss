@@ -4,6 +4,10 @@ event-option {
     color: white;
   }
 
+  .card-header h1{
+    font-size: 20px;
+  }
+
   .option-types{
     float: right;
     margin-top: 10px;
@@ -87,4 +91,6 @@ event-option {
       #add-option{
           margin: 15px; 
       }
+      
+      
 }

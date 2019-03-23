@@ -16,6 +16,20 @@
 
 <ion-content padding>
   <div id="form-area">
+      <ion-card id="eventInfo">
+          <ion-card-header>
+              <h1 >New Event</h1>
+          </ion-card-header>
+          
+          
+          <ion-card-content class="short-answer">
+            <form #eventTitle="ngForm">
+              <ion-input required [(ngModel)]="myEventTitle" placeholder="Enter Title Name" name="title" [ngClass]="(invalid == true) ? 'invalid' : ''"></ion-input>
+            </form>
+            
+          </ion-card-content>
+      </ion-card >
+      
       <event-option #option1 *ngFor="let x of data; let i = index" [index]="i" (onExit)="closeOption($event)"></event-option>
   </div>
 

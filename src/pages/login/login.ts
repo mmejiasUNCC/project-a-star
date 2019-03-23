@@ -9,6 +9,8 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { Platform, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 
+import {Storage} from '@ionic/storage';
+
 
 /**
  * Generated class for the LoginPage page.
@@ -51,6 +53,7 @@ export class LoginPage {
               private googlePlus: GooglePlus,
               public alertController: AlertController,
               public events: Events,
+              public storage: Storage,
               private platform: Platform) {
 
                 this.user = this.afAuth.authState;
@@ -105,6 +108,7 @@ export class LoginPage {
       this.currentUser.imageUrl = this.res.imageUrl;
       this.currentUser.isLoggedIn = true;
         
+      this.storage.set('user', this.currentUser);
       this.navCtrl.push(HomePage, {
         currentUser: this.currentUser
       });
@@ -128,6 +132,7 @@ export class LoginPage {
         this.currentUser.imageUrl = res.user.photoURL;
         this.currentUser.isLoggedIn = true;
         
+        this.storage.set('user', this.currentUser);
         this.navCtrl.push(HomePage, {
           currentUser: this.currentUser
         }).then(() => {
@@ -144,7 +149,8 @@ export class LoginPage {
   logout() {
     console.log("Logging out...");
     this.afAuth.auth.signOut()
-      .then(res => {
+      .then(() => {
+        this.storage.remove('user');
         this.currentUser = new User();
       })
       .catch(err => console.error(err));

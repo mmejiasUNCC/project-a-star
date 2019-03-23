@@ -19,3 +19,25 @@ ion-row button{
     left: 50%;
     transform: translateX(-50%);
 }
+
+.list {
+    margin-top: 25px;
+    .item-inner{
+        border-bottom: 1px solid rgba(0,0,0,.5)!important;
+    }
+    ion-label{
+        text-align: center;
+        color: white;
+    }
+}
+.list *{
+    background-color: rgb(16, 28, 31) !important;
+}
+
+.item{
+    height: 80px;
+}
+
+.item:hover{
+    cursor: pointer;
+}

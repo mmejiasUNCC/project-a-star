@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 /**
  * Generated class for the QrCodeComponent component.
@@ -17,6 +17,7 @@ export class QrCodeComponent {
   encodeText: string = '';
   encodedData:any = {};
   scannedData:any ={};
+  @Input() eventID: any;
 
   constructor(private scanner: BarcodeScanner) {
     console.log('Hello QrCodeComponent Component');
