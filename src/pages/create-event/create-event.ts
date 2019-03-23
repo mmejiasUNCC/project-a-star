@@ -101,8 +101,6 @@ export class CreateEventPage {
         validated = false;
       }
     });
-  
-    
 
     if(validated){
       

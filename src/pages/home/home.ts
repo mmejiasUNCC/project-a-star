@@ -79,7 +79,7 @@ export class HomePage {
    this.navCtrl.push(LoginPage).then(() => {
      let index = 0;
      this.navCtrl.remove(index);
-  });
+  }); 
     //this.currentUser = new User();
       //console.log(this.currentUser);
     if(this.platform.is('cordova')){

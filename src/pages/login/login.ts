@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events} from 'ionic-angular';
+import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -52,15 +52,12 @@ export class LoginPage {
               public afAuth: AngularFireAuth, 
               private googlePlus: GooglePlus,
               public alertController: AlertController,
-              public events: Events,
               public storage: Storage,
               private platform: Platform) {
 
                 this.user = this.afAuth.authState;
                 this.currentUser = new User();
-                events.subscribe('user:logout', () => {
-                  this.logout();
-                });
+                
   }
   
   
@@ -143,17 +140,6 @@ export class LoginPage {
     } catch(err){
       console.log(err);
     }
-  }
-
-
-  logout() {
-    console.log("Logging out...");
-    this.afAuth.auth.signOut()
-      .then(() => {
-        this.storage.remove('user');
-        this.currentUser = new User();
-      })
-      .catch(err => console.error(err));
   }
   
 }
