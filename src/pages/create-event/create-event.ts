@@ -35,6 +35,7 @@ export class CreateEventPage {
   myEvents: Array<string>;
   user: User;
   i: number = 1;
+  examType: any = 'exam';
   myEventTitle: string;
   data: Array<number>;
   invalid: boolean;
@@ -81,67 +82,77 @@ export class CreateEventPage {
     this.cdRef.detectChanges();
   }
 
+  createEvent(eventObject){
+    
+
+    let x = this.db.list('users/'+ this.user.userId + "/myevents");
+
+    x.snapshotChanges().take(1).subscribe(item => {
+      let z: Array<any> = new Array<any>();
+      item.forEach(element => {
+        z.push(element.payload.toJSON());
+      });
+      for (let key in z) {
+        this.myEvents.push(z[key]);
+      }
+
+      var newPostRef = this.db.database.ref('events/').push({
+        eventdetails: eventObject
+      });
+
+      this.db.database.ref('events/' + newPostRef.key + '/eventdetails').update({
+        eventID: newPostRef.key
+      });
+
+      this.myEvents.push(newPostRef.key);
+
+      this.db.database.ref('users/' + this.user.userId).set({
+        myevents: this.myEvents
+      });
+
+      console.log(eventObject);
+    })
+  }
+
   saveEvent(){
     let eventObject = {
-        title: this.myEventTitle,
-        eventID: '1',
-        data: {}
+      title: this.myEventTitle,
+      eventID: '1',
+      eventType: 'exam',
+      data: {}
     };
 
     let optionData: Array<IMyEntity> = new Array<IMyEntity>();
     this.myEvents = new Array<string>();                             
     let validated: boolean = true;
-
+    
     if(this.inputValidation() == true){
       validated = false;
     }
-      
-    this.childern.forEach(cmp => {
-      if(cmp.inputValidation() == true){
-        validated = false;
-      }
-    });
 
-    if(validated){
-      
+    if(this.examType == 'lab'){
+      eventObject.eventType = 'lab';
       this.childern.forEach(cmp => {
-        optionData.push(cmp.sendObjectToParent());
-      });
-
-      eventObject.data = optionData;
-
-      let x = this.db.list('users/'+ this.user.userId + "/myevents");
-      
-      x.snapshotChanges().take(1).subscribe(item => {
-        let z: Array<any> = new Array<any>();
-        item.forEach(element => {
-          z.push(element.payload.toJSON());
-        });
-        for (let key in z) {
-          this.myEvents.push(z[key]);
+        if(cmp.inputValidation() == true){
+          validated = false;
         }
- 
-        var newPostRef = this.db.database.ref('events/').push({
-          eventdetails: eventObject
-        });
-
-        this.db.database.ref('events/' + newPostRef.key + '/eventdetails').update({
-          eventID: newPostRef.key
-        });
-
-        this.myEvents.push(newPostRef.key);
-  
-        this.db.database.ref('users/' + this.user.userId).set({
-          myevents: this.myEvents
-        });
-  
-        console.log(eventObject);
-      })
-        this.navCtrl.pop();
-      
-    }else{
-      this.presentAlert();
+      });
     }
+      if(validated){
+        if(this.examType == 'lab'){
+          this.childern.forEach(cmp => {
+            optionData.push(cmp.sendObjectToParent());
+          });
+    
+          eventObject.data = optionData;
+        }
+        this.createEvent(eventObject);
+        
+        this.navCtrl.pop();
+        
+      }else{
+        this.presentAlert();
+      }
     
   }
 
