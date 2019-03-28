@@ -1,19 +1,27 @@
 <!-- Generated template for the QrCodeComponent component -->
 <div>
   <ion-content center text-center padding>
-    <div>
-      <ion-input style="background-color: gray" type="text" [(ngModel)]="encodeText"></ion-input>
-      <button ion-button block (click)="encode()">Encode</button>
+    <div [ngClass]="(qrState == 'test') ? '' : 'hide'">
+        <div>
+            <ion-input style="background-color: gray" type="text" [(ngModel)]="encodeText"></ion-input>
+            <button ion-button block (click)="encode()">Encode</button>
+          </div>
+          <div>
+            <button ion-button block (click)="scan()">Scan</button>
+            <button ion-button block (click)="addParticipant()">Test Add Participant</button>
+            <div *ngIf="scannedData.text">
+              <label> Tour barcode is</label>
+              <br>
+              <span>{{scannedData.text}}</span>
+            </div>
+          </div>
+          <p><b>Event ID inside QR Code:</b> {{eventID}}</p>
     </div>
-    <div>
-      <button ion-button block (click)="scan()">Scan</button>
-      <button ion-button block (click)="addParticipant()">Test Add Participant</button>
-      <div *ngIf="scannedData.text">
-        <label> Tour barcode is</label>
-        <br>
-        <span>{{scannedData.text}}</span>
-      </div>
-    </div>
-    <p><b>Event ID inside QR Code:</b> {{eventID}}</p>
+
+    <button [ngClass]="(qrState == 'addParticipant') ? '' : 'hide'" ion-button block (click)="addParticipant()">Add Participant</button>
+    
+    
+   
+    
   </ion-content>
 </div>

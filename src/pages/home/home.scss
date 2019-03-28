@@ -1,7 +1,13 @@
 page-home {
-
+    .content-md{
+        margin-top: 50px; 
+    }
 }
-
+h1{
+    font-size: 35px;
+    text-align: center;
+    padding-bottom: 20px;
+}
 #profilePic{
     border-radius: 400px;
     width: 100px;
@@ -29,6 +35,7 @@ ion-row button{
         text-align: center;
         color: white;
     }
+    margin-bottom: 50px;
 }
 .list *{
     background-color: rgb(16, 28, 31) !important;

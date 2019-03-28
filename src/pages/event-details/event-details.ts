@@ -20,12 +20,15 @@ export class EventDetailsPage {
   event: Observable<any>;
   eventData: Array<any>;
   eventID: string;
+  qrState: string;
+  myParticipants: Observable<any[]>;
 
   constructor(public navCtrl: NavController,
               private cdRef: ChangeDetectorRef, 
               public db: AngularFireDatabase, 
               public navParams: NavParams) {
     this.eventID = navParams.get('event');
+    this.qrState = "addParticipant";
     this.event = this.db.object('events/'+ this.eventID +'/eventdetails').valueChanges();
   }
 
@@ -46,6 +49,9 @@ export class EventDetailsPage {
          this.eventData.push(x);
         } 
       });
+
+      this.myParticipants = this.db.list('/events/'+ this.eventID + "/participantsList").valueChanges();    
+
   }
 
   ionViewDidLoad() {

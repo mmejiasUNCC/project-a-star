@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable } from 'rxjs';
 /**
  * Generated class for the QrCodeComponent component.
  *
@@ -18,8 +19,9 @@ export class QrCodeComponent {
   encodeText: string = '';
   encodedData:any = {};
   scannedData:any ={};
-  myParticipants: Array<string>;
   @Input() eventID: any;
+  @Input() qrState: any;
+  
 
   constructor(private scanner: BarcodeScanner,
               public db: AngularFireDatabase ) {
@@ -33,6 +35,7 @@ export class QrCodeComponent {
     }
     this.scanner.scan().then((data) => {
       this.scannedData = data;
+      //this.addParticipant(data);
 
     }, (err) => {
       console.log('Error : ',err);
@@ -51,11 +54,16 @@ export class QrCodeComponent {
   }
 
   addParticipant(){
-    let data = '800284325';
-    this.myParticipants = new Array<string>();
-    let x = this.db.object('events/'+ this.eventID + "/participantsList");
-    x.update({
-      [data]: data
-    });
+    //let regexp = new RegExp('^([0-9]{9})$');
+    //let validate = regexp.test(data);
+    let validate = true;
+    let data = '800872954';
+
+    if(validate){
+      let x = this.db.object('/events/'+ this.eventID + "/participantsList");
+      x.update({
+        [data]: data
+      });
+    }
   }
 }

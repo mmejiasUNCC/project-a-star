@@ -18,8 +18,13 @@
 .toolbar-title-md {
     font-size: 2rem;
     font-weight: 500;
-    color: rgb(235, 232, 227);
+    color: white;
     padding: 0px 12px;
+}
+
+.ion-md-arrow-back{
+  color: white;
+  opacity: .6;
 }
 
 body, ion-content, .toolbar-background{
@@ -28,8 +33,10 @@ body, ion-content, .toolbar-background{
 }
 
 ion-navbar, .toolbar-background{
-    background-color: rgb(16, 28, 31)!important;
+    background-color: rgba(0,69,37,0.95) !important;
     box-shadow: 0 2px 4px rgba(0,0,0,.5);
+    outline: 5px solid #c1af6c;
+    padding: 25px;
 }
 
 ion-content{
@@ -38,7 +45,8 @@ ion-content{
 
 
 .button{
-    background-color: rgb(15, 109, 172) !important;
+    background-color: #004525 !important;
+    border: solid 1px #0c7544;
     .button-inner{
       margin: 0px;
     }

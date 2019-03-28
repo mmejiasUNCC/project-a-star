@@ -8,6 +8,11 @@ page-create-event {
         overflow-x: hidden;
     }
 
+    .toolbar-content-md .button{
+        background-color: rgb(179, 163, 105) !important;
+        color: white;
+    }
+
     .hide{
         display: none;
     }
@@ -38,14 +43,15 @@ page-create-event {
     .text-input{
         padding: 15px 5px;
         margin-bottom: 25px;
-        border-bottom: 1px solid #11446e;
+        border-bottom: 1px solid #686e11;
       }
       
       .text-input:focus{
-        border-bottom: 1px solid #2196f3;
+        border-bottom: 1px solid #c4cf1e;
       }
     
       #eventInfo{
+          margin-top: 30px;
           h1{
             text-align: center;
             margin-top: 25px;

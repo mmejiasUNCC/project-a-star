@@ -1,9 +1,13 @@
 qr-code {
-    ion-content{
-        height: 180px;
+    .content-md{
+       height: 80px;
+       // padding: 35px 0px !important;
     }
     .scroll-content{
         overflow-x: hidden; 
         overflow-y: hidden;
+    }
+    .hide{
+        display: none;
     }
 }

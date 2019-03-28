@@ -14,18 +14,19 @@
 
 
 <ion-content padding>
-  <p>
+  <h1>
       {{ (event | async)?.title }}
-  </p>
-  
-  <p>
-      {{ (event | async)?.eventID }}
-  </p>
-
-  <p *ngFor="let event of eventData; let i = index">
-    {{ (event | async)?.optionType }}
-  </p>
+  </h1>
  
-  <qr-code [eventID] ="eventID"></qr-code>
+  <qr-code [eventID] ="eventID" [qrState] = "qrState"></qr-code>
 
+  <ion-list>
+      <h3>
+          Participant List
+      </h3>
+      <ion-item *ngFor="let item of myParticipants | async ; let i = index">
+        <ion-label>{{ item | json }}</ion-label>
+      </ion-item>
+    </ion-list>
+  
 </ion-content>

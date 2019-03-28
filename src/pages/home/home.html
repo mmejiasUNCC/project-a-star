@@ -25,14 +25,14 @@
 
   <qr-code></qr-code>
 -->
-<button ion-button (click)="goToCreateEvent()">Create Event</button>
 
+<h1>My Events</h1>
 <ion-list>
   <ion-item *ngFor="let event of eventData; let i = index" (click)="goToEvent(i)">
     <ion-label>{{ (event[1] | async)?.title }}</ion-label>
   </ion-item>
 </ion-list>
-
+<button ion-button (click)="goToCreateEvent()">Create Event</button>
 <button ion-button (click)="signOut()">Signout</button>
 
 </ion-content>
