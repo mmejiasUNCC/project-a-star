@@ -18,10 +18,8 @@
           <p><b>Event ID inside QR Code:</b> {{eventID}}</p>
     </div>
 
-    <button [ngClass]="(qrState == 'addParticipant') ? '' : 'hide'" ion-button block (click)="addParticipant()">Add Participant</button>
-    
-    
-   
+    <button [ngClass]="(qrState == 'addParticipant') ? '' : 'hide'" ion-button block (click)="scan()">Add Participant</button>
+
     
   </ion-content>
 </div>

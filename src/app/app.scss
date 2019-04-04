@@ -97,6 +97,9 @@ ion-content{
   }
 }
 
+.scroll-content {
+  padding-bottom: 0 !important;
+}
 /* Scrollbar width */
 ::-webkit-scrollbar {
     width: 10px;

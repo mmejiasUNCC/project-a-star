@@ -98,7 +98,7 @@ export class LoginPage {
           firebase.auth.GoogleAuthProvider.credential(res.idToken)
         )
       })
-
+      console.log(this.res);
       this.currentUser.displayName = this.res.givenName + "  " + this.res.familyName;
       this.currentUser.email = this.res.email;
       this.currentUser.userId = this.res.userId;
@@ -123,9 +123,10 @@ export class LoginPage {
       const provider = new firebase.auth.GoogleAuthProvider();
       await this.afAuth.auth.signInWithPopup(provider)
       .then(res => {
+        
         this.currentUser.displayName = res.user.displayName;
         this.currentUser.email = res.user.email;
-        this.currentUser.userId = res.user.uid;
+        this.currentUser.userId = Object(res.additionalUserInfo.profile)["id"];
         this.currentUser.imageUrl = res.user.photoURL;
         this.currentUser.isLoggedIn = true;
         

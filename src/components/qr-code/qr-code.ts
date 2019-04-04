@@ -18,7 +18,7 @@ export class QrCodeComponent {
   options: BarcodeScannerOptions;
   encodeText: string = '';
   encodedData:any = {};
-  scannedData:any ={};
+  scannedData:any = '';
   @Input() eventID: any;
   @Input() qrState: any;
   
@@ -34,8 +34,7 @@ export class QrCodeComponent {
       prompt: 'Scan your barcode'
     }
     this.scanner.scan().then((data) => {
-      this.scannedData = data;
-      //this.addParticipant(data);
+      this.addParticipant(data.text);
 
     }, (err) => {
       console.log('Error : ',err);
@@ -46,6 +45,7 @@ export class QrCodeComponent {
     console.log(this.encodeText);
     this.scanner.encode(this.scanner.Encode.TEXT_TYPE, this.encodeText).then((data) => {
       this.encodedData = data;
+      console.log(data);
     }, (err) => {
       console.log('Error : ',err);
       console.log("here");
@@ -53,17 +53,16 @@ export class QrCodeComponent {
     
   }
 
-  addParticipant(){
-    //let regexp = new RegExp('^([0-9]{9})$');
-    //let validate = regexp.test(data);
-    let validate = true;
-    let data = '800872954';
+  addParticipant(data){
+    let regexp = new RegExp('^([0-9]{9})$');
+    let validate = regexp.test(data);
 
     if(validate){
       let x = this.db.object('/events/'+ this.eventID + "/participantsList");
       x.update({
-        [data]: data
+        [data]: Number(data)
       });
+      console.log("It worked!!!");
     }
   }
 }
