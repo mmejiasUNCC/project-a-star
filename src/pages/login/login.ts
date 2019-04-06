@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
 import * as firebase from 'firebase/app';
 
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -10,6 +11,7 @@ import { Platform, AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs';
 
 import {Storage} from '@ionic/storage';
+import { NgForm } from '@angular/forms';
 
 
 /**
@@ -46,10 +48,18 @@ export class LoginPage {
   currentUser: User;
   res: any;
   user: Observable<firebase.User>;
+  firstLogin: boolean = false;
+  @ViewChild('firstLoginForm') firstLoginForm: NgForm;
+  invalid: boolean;
+  ninernetValidation: boolean;
+  username: string;
+  ninernetID: string;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
+              private cdRef: ChangeDetectorRef,
               public afAuth: AngularFireAuth, 
+              public db: AngularFireDatabase, 
               private googlePlus: GooglePlus,
               public alertController: AlertController,
               public storage: Storage,
@@ -66,10 +76,11 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  async presentAlert(err) {
+  async presentAlert() {
     const alert = await this.alertController.create({
-      title: 'Test',
-      message: 'This part of code works',
+      title: 'Invaild Input',
+      subTitle: 'Cannot Submission',
+      message: 'Make sure to fill out every field in red and also make sure the NinerNet ID is in the correct format',
       buttons: ['OK']
     });
 
@@ -106,13 +117,12 @@ export class LoginPage {
       this.currentUser.isLoggedIn = true;
         
       this.storage.set('user', this.currentUser);
-      this.navCtrl.push(HomePage, {
-        currentUser: this.currentUser
-      });
 
+
+      
+      this.nav();
 
     } catch(err){
-      this.presentAlert(err);
       console.log(err);
     }
   }
@@ -131,64 +141,76 @@ export class LoginPage {
         this.currentUser.isLoggedIn = true;
         
         this.storage.set('user', this.currentUser);
-        this.navCtrl.push(HomePage, {
-          currentUser: this.currentUser
-        }).then(() => {
-          let index = 0;
-          this.navCtrl.remove(index);
-        });
+
+        this.nav();
       });
     } catch(err){
       console.log(err);
     }
   }
-  
+
+  goToHomePage(){
+    this.navCtrl.push(HomePage, {
+      currentUser: this.currentUser
+    }).then(() => {
+      let index = 0;
+      this.navCtrl.remove(index);
+    });
+  }
+
+  nav(){
+    let x = this.db.object('users/'+ this.currentUser.userId);
+
+    x.snapshotChanges().take(1).subscribe(user => {
+      if(user.key == null ){
+        console.log("First login");
+        this.firstLogin = true;
+      }else{
+        console.log("User exists");
+        this.goToHomePage();
+      }
+    });
+  }
+  firstSignIn(){
+    if(this.inputValidation() == true){
+      this.presentAlert();
+    }else{
+      let x = this.db.object('users/'+ this.currentUser.userId);
+      x.update({
+        name: this.currentUser.displayName,
+        email: this.currentUser.email,
+        image: this.currentUser.imageUrl,
+        username: this.username,
+        ninernetID: this.ninernetID
+      });
+
+      let y = this.db.object('ninernetID/'+ this.ninernetID);
+      y.update({
+        user: this.currentUser.userId,
+      });
+
+      this.goToHomePage();
+    }
+  }
+
+  inputValidation(){
+
+    if(this.firstLoginForm.valid == false){
+      this.invalid = true;
+    }else{
+      this.invalid = false;
+    }
+
+    let regexp = new RegExp('^([0-9]{9})$');
+    let validate = regexp.test(this.ninernetID);
+
+    if(!validate){
+      this.invalid = true;
+      this.ninernetValidation = false;
+    }
+    
+    this.cdRef.detectChanges();
+    return this.invalid;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-  login() {
-    this.googlePlus.login({})
-      .then(res => {
-        console.log(res);
-        this.displayName = res.displayName;
-        this.email = res.email;
-        this.familyName = res.familyName;
-        this.givenName = res.givenName;
-        this.userId = res.userId;
-        this.imageUrl = res.imageUrl;
-
-        this.isLoggedIn = true;
-      })
-      .catch(err => console.error(err));
-  }
-
-  logout() {
-    this.googlePlus.logout()
-      .then(res => {
-        console.log(res);
-        this.displayName = "";
-        this.email = "";
-        this.familyName = "";
-        this.givenName = "";
-        this.userId = "";
-        this.imageUrl = "";
-
-        this.isLoggedIn = false;
-      })
-      .catch(err => console.error(err));
-  }
-
-  */
 

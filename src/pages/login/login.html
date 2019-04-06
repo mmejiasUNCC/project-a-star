@@ -13,8 +13,15 @@
                     
               </ion-col>
         </ion-row>
-        <ion-row>
-                <button ion-button (click)="googleLogin()">Login with Google</button>
+        <ion-row *ngIf="!firstLogin">
+                <button id="loginBtn" ion-button (click)="googleLogin()">Login with Google</button>
+        </ion-row>
+        <ion-row *ngIf="firstLogin">
+            <form #firstLoginForm="ngForm">
+                  <ion-input required [(ngModel)]="username" placeholder="Enter Username" name="username" [ngClass]="(invalid == true) ? 'invalid' : ''"></ion-input>
+                  <ion-input required [(ngModel)]="ninernetID" placeholder="Enter Ninernet ID" name="ninernetID" [ngClass]="(invalid == true || ninernetValidation == false) ? 'invalid' : ''"></ion-input>
+            </form>
+            <button id="SubmitBtn" ion-button (click)="firstSignIn()">Submit</button>
         </ion-row>
   </ion-grid>
   

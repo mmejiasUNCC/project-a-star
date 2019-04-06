@@ -106,7 +106,7 @@ export class CreateEventPage {
 
       this.myEvents.push(newPostRef.key);
 
-      this.db.database.ref('users/' + this.user.userId).set({
+      this.db.database.ref('users/' + this.user.userId).update({
         myevents: this.myEvents
       });
 
@@ -158,8 +158,8 @@ export class CreateEventPage {
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      title: 'Missing input',
-      subTitle: 'Invaild Submission',
+      title: 'Invaild Input',
+      subTitle: 'Cannot Submission',
       message: 'Make sure to fill out every field in red to save Event.',
       buttons: ['OK']
     });

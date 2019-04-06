@@ -1,5 +1,16 @@
 page-login {
-
+    .text-input{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 15px 5px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #686e11;
+      }
+      
+      .text-input:focus{
+        border-bottom: 1px solid #c4cf1e;
+      }
 }
 
 ion-grid{
@@ -31,7 +42,14 @@ ion-row{
     margin-bottom: 20px;
 }
 
-#loginContent button{
+form{
+    margin: auto;
+    width: 450px;
+}
+
+
+
+#loginBtn{
     position: absolute;
     padding: 15px !important;
     width: 250px;
@@ -40,6 +58,22 @@ ion-row{
     bottom: 30%;
     left: 50%;
     transform: translateX(-50%);
+}
+
+#SubmitBtn{
+    position: absolute;
+    padding: 15px !important;
+    width: 150px;
+    height: 50px;
+    border-radius: 15px;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #686e11;
+}
+
+#SubmitBtn:hover{
+    border: 1px solid #808813;
 }
 
 .hr {
