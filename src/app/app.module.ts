@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { ProfilePage } from '../pages/profile/profile';
 import { EventDetailsPage } from '../pages/event-details/event-details';
 import { LoginPage } from '../pages/login/login';
+import { AttendedEventsPage } from '../pages/attended-events/attended-events';
+
 import { MenuPage } from '../pages/menu/menu';
 import { CreateEventPage } from '../pages/create-event/create-event';
 
@@ -32,6 +34,7 @@ import { RouterModule } from '@angular/router';
   declarations: [
     MyApp,
     AboutPage,
+    AttendedEventsPage,
     ProfilePage,
     MenuPage,
     ContactPage,
@@ -56,6 +59,7 @@ import { RouterModule } from '@angular/router';
     MyApp,
     AboutPage,
     ContactPage,
+    AttendedEventsPage,
     HomePage,
     MenuPage,
     EventDetailsPage,

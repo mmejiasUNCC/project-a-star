@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+      <button ion-button menuToggle>
+          <ion-icon name="menu" style="zoom:1.3;"></ion-icon>
+      </button>
+      <ion-title>Attended Events</ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content center text-center padding>
+    <h1>My Attended Events</h1>
+    <ion-list>
+      <ion-item *ngFor="let event of eventData; let i = index" >
+        <ion-label>{{ (event[1] | async)?.title }}</ion-label>
+     </ion-item>
+    </ion-list>
+    <button ion-button (click)="signOut()">Signout</button>
+  
+  </ion-content>
+  

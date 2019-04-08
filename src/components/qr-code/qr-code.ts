@@ -91,7 +91,8 @@ export class QrCodeComponent {
       x.update({
         [data]: Number(data)
       });
-      console.log("It worked!!!");
+      let y = this.db.list('/ninernetID/' + data + '/attendedEvents');
+      y.set(this.eventID, { eventID: this.eventID });
     }else{
       this.invalid = true;
       this.presentAlert();
