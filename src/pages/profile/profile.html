@@ -1,0 +1,35 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu" style="zoom:1.3;"></ion-icon>
+      </button>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content center text-center padding>
+    <ion-grid id="homeContent"> 
+        <ion-row>
+              <ion-col *ngIf="loaded">
+                    <h1 text-uppercase no-padding no-margin >Profile</h1>
+                    <h3  no-padding no-margin >{{ (userRef | async)?.name }}</h3>
+                    <img id="profilePic" [src]="this.user.imageUrl">
+                    <p  no-padding no-margin >Username: {{ (userRef | async)?.username }}</p>
+                    <p  no-padding no-margin >Email: {{ (userRef | async)?.email }}</p>
+                    <p  no-padding no-margin >Ninernet ID: {{ (userRef | async)?.ninernetID }}</p>
+              </ion-col>
+        </ion-row>
+        <ion-row>
+                <button ion-button (click)="signOut()">Signout</button>
+        </ion-row>
+  </ion-grid>
+</ion-content>

@@ -3,6 +3,21 @@ qr-code {
        height: 80px;
        // padding: 35px 0px !important;
     }
+    .changeSize{
+        height: 180px; 
+    }
+    .text-input{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 15px 5px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #686e11;
+      }
+      
+      .text-input:focus{
+        border-bottom: 1px solid #c4cf1e;
+      }
     .scroll-content{
         overflow-x: hidden; 
         overflow-y: hidden;

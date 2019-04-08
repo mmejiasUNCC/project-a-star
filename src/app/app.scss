@@ -27,6 +27,14 @@
   font-size: 55px;
 }
 
+.menu-inner .list .item-inner {
+  border-bottom: none !important;
+}
+
+.menu-inner .item-block{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5) !important;
+}
+
 .ion-md-arrow-back{
   color: white;
   opacity: .6;

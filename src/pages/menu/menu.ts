@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Nav } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ContactPage } from '../contact/contact';
+import { ProfilePage } from '../profile/profile';
 import { MenuController } from 'ionic-angular';
 /**
  * Generated class for the MenuPage page.
@@ -19,6 +20,7 @@ export class MenuPage {
   public rootPage: any = HomePage;
   homePage: any = HomePage;
   contactPage: any = ContactPage;
+  profilePage: any = ProfilePage;
   @ViewChild('content') nav: Nav;
 
   constructor(public navCtrl: NavController, 

@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { ProfilePage } from '../pages/profile/profile';
 import { EventDetailsPage } from '../pages/event-details/event-details';
 import { LoginPage } from '../pages/login/login';
 import { MenuPage } from '../pages/menu/menu';
@@ -31,6 +32,7 @@ import { RouterModule } from '@angular/router';
   declarations: [
     MyApp,
     AboutPage,
+    ProfilePage,
     MenuPage,
     ContactPage,
     HomePage,
@@ -58,6 +60,7 @@ import { RouterModule } from '@angular/router';
     MenuPage,
     EventDetailsPage,
     LoginPage,
+    ProfilePage,
     CreateEventPage
   ],
   providers: [

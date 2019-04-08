@@ -1,6 +1,6 @@
 <!-- Generated template for the QrCodeComponent component -->
 <div>
-  <ion-content center text-center padding>
+  <ion-content center text-center padding [ngClass]="(showEventAdd == true) ? 'changeSize' : ''">
     <div [ngClass]="(qrState == 'test') ? '' : 'hide'">
         <div>
             <ion-input style="background-color: gray" type="text" [(ngModel)]="encodeText"></ion-input>
@@ -19,7 +19,10 @@
     </div>
 
     <button [ngClass]="(qrState == 'addParticipant') ? '' : 'hide'" ion-button block (click)="scan()">Add Participant</button>
-
+    <div *ngIf="showEventAdd">
+        <ion-input required [(ngModel)]="ninerID" placeholder="Enter Ninernet ID" name="ninernetid" [ngClass]="(invalid == true) ? 'invalid' : ''"></ion-input>
+        <button ion-button (click)="webAddParticipant()">Submit</button>
+    </div>
     
   </ion-content>
 </div>
