@@ -1,6 +1,6 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
-import { HomePage } from '../home/home';
+import { MenuPage } from '../menu/menu';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -150,7 +150,7 @@ export class LoginPage {
   }
 
   goToHomePage(){
-    this.navCtrl.push(HomePage, {
+    this.navCtrl.push(MenuPage, {
       currentUser: this.currentUser
     }).then(() => {
       let index = 0;

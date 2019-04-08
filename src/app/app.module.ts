@@ -8,6 +8,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { EventDetailsPage } from '../pages/event-details/event-details';
 import { LoginPage } from '../pages/login/login';
+import { MenuPage } from '../pages/menu/menu';
 import { CreateEventPage } from '../pages/create-event/create-event';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -24,12 +25,13 @@ import {ComponentsModule} from '../components/components.module';
 import { FormsModule } from '@angular/forms';
 
 import {IonicStorageModule} from '@ionic/storage';
-
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
+    MenuPage,
     ContactPage,
     HomePage,
     EventDetailsPage,
@@ -38,6 +40,7 @@ import {IonicStorageModule} from '@ionic/storage';
   ],
   imports: [
     BrowserModule,
+    RouterModule,
     ComponentsModule,
     FormsModule,
     IonicModule.forRoot(MyApp),
@@ -52,6 +55,7 @@ import {IonicStorageModule} from '@ionic/storage';
     AboutPage,
     ContactPage,
     HomePage,
+    MenuPage,
     EventDetailsPage,
     LoginPage,
     CreateEventPage

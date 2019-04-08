@@ -4,7 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 //import { CreateEventPage } from '../pages/create-event/create-event';
-import { HomePage } from '../pages/home/home';
+//import { HomePage } from '../pages/home/home';
+import { MenuPage } from '../pages/menu/menu';
 import {Storage} from '@ionic/storage';
 import { AngularFireAuth } from '@angular/fire/auth';
 
@@ -37,7 +38,7 @@ export class MyApp {
     this.storage.get('user').then((val) => {
       console.log(val);
       if(val != null){
-        this.rootPage = HomePage;
+        this.rootPage = MenuPage;
       }else{
         this.rootPage = LoginPage;
       }

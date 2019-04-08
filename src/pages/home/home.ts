@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { NavController, NavParams , Events} from 'ionic-angular';
 import { User } from '../login/login';
 import { LoginPage } from '../login/login';
+import { AboutPage } from '../about/about';
 import { CreateEventPage } from '../create-event/create-event';
 import { Platform } from 'ionic-angular';
 
@@ -72,6 +73,10 @@ export class HomePage {
 
   goToCreateEvent(){
     this.navCtrl.push(CreateEventPage);
+  }
+
+  goToAbout(){
+    this.navCtrl.push(AboutPage);
   }
 
   signOut(){
