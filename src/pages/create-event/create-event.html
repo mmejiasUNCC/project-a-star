@@ -28,6 +28,16 @@
               <input [(ngModel)]="examType" type="radio" name="gender" value="exam"> Exam<br>
               <input [(ngModel)]="examType" type="radio" name="gender" value="lab"> Lab<br> 
             </form>
+            
+            <button ion-button block (click)="showAdminList()">Add Users to Admin List</button>
+            <div *ngIf="showAddAdminUser">
+                <ion-input required [(ngModel)]="ninerID" placeholder="Enter Ninernet ID" name="ninernetid" [ngClass]="(ninerIdInvalid == true) ? 'invalid' : ''"></ion-input>
+                <select (change)="typeSelect($event.target.value)">
+                  <option value="superUser" selected>Super User</option>
+                  <option value="adminUser">Admin</option>
+                </select>
+                <button ion-button (click)="addToAdminList()">Submit</button>
+            </div>
 
           </ion-card-content>
       </ion-card >

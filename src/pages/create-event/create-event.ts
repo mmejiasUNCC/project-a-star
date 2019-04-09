@@ -21,6 +21,10 @@ interface IMyEntity {
   data: any;   
 }
 
+interface LooseObject {
+  [key: string]: any
+}
+
 
 @IonicPage()
 @Component({
@@ -39,6 +43,11 @@ export class CreateEventPage {
   myEventTitle: string;
   data: Array<number>;
   invalid: boolean;
+  ninerIdInvalid: boolean;
+  showAddAdminUser: boolean = false;
+  accessType: string = 'superUser';
+  ninerID:string;
+  adminList: LooseObject = {};
   title = "Sent from parent";
 
   @ViewChildren(EventOptionComponent) childern: QueryList<EventOptionComponent>;
@@ -68,7 +77,7 @@ export class CreateEventPage {
   ngOnInit() {
     this.storage.get('user').then((val) => {
       this.user = val;
-
+      this.adminList[this.user.userId] = {access:'admin'};
       
     });
   }
@@ -82,8 +91,54 @@ export class CreateEventPage {
     this.cdRef.detectChanges();
   }
 
+  typeSelect(data){
+    if(data == 'superUser'){
+      this.accessType = 'superUser';
+    }else if(data == 'adminUser'){
+      this.accessType = 'admin';
+    }
+  }
+
+  showAdminList(){
+    if(this.showAddAdminUser == false){
+      this.showAddAdminUser = true;
+    }else{
+      this.showAddAdminUser = false;
+    }
+  }
+
+  addToAdminList(){
+    let regexp = new RegExp('^([0-9]{9})$');
+    let validate = regexp.test(this.ninerID);
+
+    if(validate){
+      let x = this.db.list('ninernetID/' + this.ninerID);
+      x.snapshotChanges().take(1).subscribe(item => {
+        if(item.length == 0){
+          console.log('Null');
+          this.ninerIdInvalid = true;
+        }else{
+          let user: Array<any> = new Array<any>();
+          item.forEach(element => {
+            user.push(element.payload.toJSON());
+          });
+          
+          this.ninerIdInvalid = false;
+          this.showAddAdminUser = false;
+          this.adminList[user[1]] = {access: this.accessType};
+          this.ninerID = '';
+      
+        }
+      });
+
+    }else{
+      this.ninerIdInvalid = true;
+      this.presentAlert();
+    }
+  
+  }
+
   createEvent(eventObject){
-    
 
     let x = this.db.list('users/'+ this.user.userId + "/myevents");
 
@@ -98,6 +153,10 @@ export class CreateEventPage {
 
       var newPostRef = this.db.database.ref('events/').push({
         eventdetails: eventObject
+      });
+
+      this.db.database.ref('events/' + newPostRef.key).update({
+        accessControl: this.adminList
       });
 
       this.db.database.ref('events/' + newPostRef.key + '/eventdetails').update({

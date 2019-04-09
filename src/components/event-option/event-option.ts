@@ -64,13 +64,10 @@ export class EventOptionComponent {
   typeSelect(data){
     if(data == 'shortAnswer'){
       this.nodeType = 'shortanswer';
-      console.log('Changed to short answer!');
     }else if(data == 'checkBox'){
       this.nodeType = 'checkbox';
-      console.log('Changed to checkbox!');
     }else if(data == 'linearScale'){
       this.nodeType = 'linearscale';
-      console.log('Changed to linear scale!');
     }
     this.cdRef.detectChanges();
   }
