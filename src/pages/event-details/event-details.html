@@ -21,11 +21,13 @@
     <button ion-button block (click)="showAdminList()">Add Users to Admin List</button>
     <div *ngIf="showAddAdminUser">
         <ion-input required [(ngModel)]="ninerID" placeholder="Enter Ninernet ID" name="ninernetid" [ngClass]="(ninerIdInvalid == true) ? 'invalid' : ''"></ion-input>
-        <select (change)="typeSelect($event.target.value)">
-          <option value="superUser" selected>Super User</option>
-          <option value="adminUser">Admin</option>
-        </select>
-        <button ion-button (click)="addToAdminList()">Submit</button>
+        <div class="adminSelect">
+          <select (change)="typeSelect($event.target.value)">
+            <option value="superUser" selected>Super User</option>
+            <option value="adminUser">Admin</option>
+          </select>
+          <button ion-button (click)="addToAdminList()">Submit</button>
+        </div>
     </div>
   </div>
   

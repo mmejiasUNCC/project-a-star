@@ -109,7 +109,20 @@ ion-content{
     border-bottom: 1px solid #f20202;
   }
 }
+select {
+  background-color: #11446e;
+  border: none;
+  padding: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 36px;
+  margin-top: 5px;  
+}
 
+.adminSelect select{
+  vertical-align: bottom;
+  margin-bottom: 4px;
+}
 .scroll-content {
   padding-bottom: 0 !important;
 }

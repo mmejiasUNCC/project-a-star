@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { Observable } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { take } from 'rxjs-compat/operator/take';
+
 
 /**
  * Generated class for the EventDetailsPage page.
@@ -170,7 +170,7 @@ export class EventDetailsPage {
     const alert = await this.alertController.create({
       title: 'Invaild Input',
       subTitle: 'Cannot Submission',
-      message: 'Make sure to fill out every field in red to save Event.',
+      message: 'Make sure to fill out every field in red.',
       buttons: ['OK']
     });
 
