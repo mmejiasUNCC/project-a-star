@@ -17,15 +17,26 @@
   <h1>
       {{ (event | async)?.title }}
   </h1>
- 
+  <div [ngClass]="(isAdmin == false) ? 'hide' : ''">
+    <button ion-button block (click)="showAdminList()">Add Users to Admin List</button>
+    <div *ngIf="showAddAdminUser">
+        <ion-input required [(ngModel)]="ninerID" placeholder="Enter Ninernet ID" name="ninernetid" [ngClass]="(ninerIdInvalid == true) ? 'invalid' : ''"></ion-input>
+        <select (change)="typeSelect($event.target.value)">
+          <option value="superUser" selected>Super User</option>
+          <option value="adminUser">Admin</option>
+        </select>
+        <button ion-button (click)="addToAdminList()">Submit</button>
+    </div>
+  </div>
+  
   <qr-code [eventID] ="eventID" [qrState] = "qrState"></qr-code>
 
   <ion-list>
       <h3>
           Participant List
       </h3>
-      <ion-item *ngFor="let item of myParticipants | async ; let i = index">
-        <ion-label>{{ item | json }}</ion-label>
+      <ion-item *ngFor="let item of myParticipants; let i = index">
+        <ion-label>{{ item.name }}</ion-label>
       </ion-item>
     </ion-list>
   

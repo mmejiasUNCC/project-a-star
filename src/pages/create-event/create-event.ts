@@ -1,11 +1,11 @@
-import { Component, ChangeDetectorRef, ViewChildren, QueryList, ViewChild} from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { User } from '../login/login';
-import {EventOptionComponent} from '../../components/event-option/event-option';
+import { EventOptionComponent } from '../../components/event-option/event-option';
 import { AngularFireDatabase } from '@angular/fire/database';
 import 'rxjs/add/operator/take';
 
-import {Storage} from '@ionic/storage';
+import { Storage } from '@ionic/storage';
 import { NgForm } from '@angular/forms';
 /**
  * Generated class for the CreateEventPage page.
@@ -18,7 +18,7 @@ import { NgForm } from '@angular/forms';
 interface IMyEntity {
   optionID: string;
   optionType: string;
-  data: any;   
+  data: any;
 }
 
 interface LooseObject {
@@ -42,32 +42,33 @@ export class CreateEventPage {
   examType: any = 'exam';
   myEventTitle: string;
   data: Array<number>;
+  addedUsers: Array<string>= [];
   invalid: boolean;
   ninerIdInvalid: boolean;
   showAddAdminUser: boolean = false;
   accessType: string = 'superUser';
-  ninerID:string;
+  ninerID: string;
   adminList: LooseObject = {};
   title = "Sent from parent";
 
   @ViewChildren(EventOptionComponent) childern: QueryList<EventOptionComponent>;
   @ViewChild('eventTitle') eventTitle: NgForm;
 
-  constructor(public navCtrl: NavController, 
-              private cdRef: ChangeDetectorRef,
-              public db: AngularFireDatabase, 
-              public alertController: AlertController,
-              public storage: Storage,
-              public navParams: NavParams) {
-                this.data = [this.i];
-                this.myEvents = [];
+  constructor(public navCtrl: NavController,
+    private cdRef: ChangeDetectorRef,
+    public db: AngularFireDatabase,
+    public alertController: AlertController,
+    public storage: Storage,
+    public navParams: NavParams) {
+    this.data = [this.i];
+    this.myEvents = [];
   }
 
-  inputValidation(){
+  inputValidation() {
 
-    if(this.eventTitle.valid == false){
+    if (this.eventTitle.valid == false) {
       this.invalid = true;
-    }else{
+    } else {
       this.invalid = false;
     }
     this.cdRef.detectChanges();
@@ -77,79 +78,73 @@ export class CreateEventPage {
   ngOnInit() {
     this.storage.get('user').then((val) => {
       this.user = val;
-      this.adminList[this.user.userId] = {access:'admin'};
-      
+      this.adminList[this.user.userId] = { access: 'admin' };
+
     });
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateEventPage');
   }
 
-  addItem(){
+  addItem() {
     this.i++;
     this.data.push(this.i);
     this.cdRef.detectChanges();
   }
 
-  typeSelect(data){
-    if(data == 'superUser'){
+  typeSelect(data) {
+    if (data == 'superUser') {
       this.accessType = 'superUser';
-    }else if(data == 'adminUser'){
+    } else if (data == 'adminUser') {
       this.accessType = 'admin';
     }
   }
 
-  showAdminList(){
-    if(this.showAddAdminUser == false){
+  showAdminList() {
+    if (this.showAddAdminUser == false) {
       this.showAddAdminUser = true;
-    }else{
+    } else {
       this.showAddAdminUser = false;
     }
   }
 
-  addToAdminList(){
+  addToAdminList() {
     let regexp = new RegExp('^([0-9]{9})$');
     let validate = regexp.test(this.ninerID);
 
-    if(validate){
+    if (validate) {
       let x = this.db.list('ninernetID/' + this.ninerID);
       x.snapshotChanges().take(1).subscribe(item => {
-        if(item.length == 0){
+        if (item.length == 0) {
           console.log('Null');
           this.ninerIdInvalid = true;
-        }else{
-          let user: Array<any> = new Array<any>();
+        } else {
+          let key: any;
+
           item.forEach(element => {
-            user.push(element.payload.toJSON());
+            if(typeof element.payload.toJSON() === "string"){
+             key =  element.payload.toJSON();
+            }
           });
           
+          this.addedUsers.push(key);
           this.ninerIdInvalid = false;
           this.showAddAdminUser = false;
-          this.adminList[user[1]] = {access: this.accessType};
+          this.adminList[key] = { access: this.accessType };
           this.ninerID = '';
-      
         }
       });
 
-    }else{
+      console.log('Returned: ', this.adminList);
+
+    } else {
       this.ninerIdInvalid = true;
       this.presentAlert();
     }
-  
+
   }
 
-  createEvent(eventObject){
-
-    let x = this.db.list('users/'+ this.user.userId + "/myevents");
-
-    x.snapshotChanges().take(1).subscribe(item => {
-      let z: Array<any> = new Array<any>();
-      item.forEach(element => {
-        z.push(element.payload.toJSON());
-      });
-      for (let key in z) {
-        this.myEvents.push(z[key]);
-      }
+  createEvent(eventObject) {
 
       var newPostRef = this.db.database.ref('events/').push({
         eventdetails: eventObject
@@ -163,17 +158,21 @@ export class CreateEventPage {
         eventID: newPostRef.key
       });
 
-      this.myEvents.push(newPostRef.key);
+      //this.myEvents.push(newPostRef.key);
+      this.addedUsers.push(this.user.userId);
 
-      this.db.database.ref('users/' + this.user.userId).update({
-        myevents: this.myEvents
-      });
-
-      console.log(eventObject);
-    })
+      for(let key in this.addedUsers){
+        //console.log(this.addedUsers[userId]);
+        this.db.database.ref('users/' + this.addedUsers[key] + '/myevents').update({
+          [newPostRef.key]: newPostRef.key
+        });
+      }
+      
+      console.log(this.addedUsers);
+   
   }
 
-  saveEvent(){
+  saveEvent() {
     let eventObject = {
       title: this.myEventTitle,
       eventID: '1',
@@ -182,37 +181,37 @@ export class CreateEventPage {
     };
 
     let optionData: Array<IMyEntity> = new Array<IMyEntity>();
-    this.myEvents = new Array<string>();                             
+    this.myEvents = new Array<string>();
     let validated: boolean = true;
-    
-    if(this.inputValidation() == true){
+
+    if (this.inputValidation() == true) {
       validated = false;
     }
 
-    if(this.examType == 'lab'){
+    if (this.examType == 'lab') {
       eventObject.eventType = 'lab';
       this.childern.forEach(cmp => {
-        if(cmp.inputValidation() == true){
+        if (cmp.inputValidation() == true) {
           validated = false;
         }
       });
     }
-      if(validated){
-        if(this.examType == 'lab'){
-          this.childern.forEach(cmp => {
-            optionData.push(cmp.sendObjectToParent());
-          });
-    
-          eventObject.data = optionData;
-        }
-        this.createEvent(eventObject);
-        
-        this.navCtrl.pop();
-        
-      }else{
-        this.presentAlert();
+    if (validated) {
+      if (this.examType == 'lab') {
+        this.childern.forEach(cmp => {
+          optionData.push(cmp.sendObjectToParent());
+        });
+
+        eventObject.data = optionData;
       }
-    
+      this.createEvent(eventObject);
+
+      this.navCtrl.pop();
+
+    } else {
+      this.presentAlert();
+    }
+
   }
 
   async presentAlert() {
@@ -225,8 +224,8 @@ export class CreateEventPage {
 
     await alert.present();
   }
-  
-  closeOption(index){
+
+  closeOption(index) {
     this.data.splice(index, 1);
     this.cdRef.detectChanges();
     console.log(index);

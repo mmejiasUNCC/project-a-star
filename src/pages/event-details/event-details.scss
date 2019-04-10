@@ -10,4 +10,13 @@ page-event-details {
         text-align: center;
         padding: 25px 25px;
     }
+    .text-input{
+        padding: 15px 5px;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #686e11;
+      }
+      
+      .text-input:focus{
+        border-bottom: 1px solid #c4cf1e;
+      }
 }
